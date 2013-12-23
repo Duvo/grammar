@@ -31,7 +31,18 @@ de base offerte par le langage. Aucune librairie extérieure n'a été utilisée
  
 ### Déroulement du développement
  
- TODO
+Après avoir regardé du coté de l'algorithme CYK, je me suis dit que ce serait plus amusant d'essayer de creer une librairie et un algorithme personnel de toutes pièces.
+
+J'ai tout d'abord travailler sur les méthodes permettant de parser une règle à partir d'une chaîne. Par exemple, avec la chaîne (SN/S)/V, l'objectif était d'obtenir une structure de la forme [['SN','/','S'],'/','V'], mais encapsulé dans des classes métiers. Dans ma librairie, il s'agit des classes Rule.
+J'ai aussi voulu gérer le problème des règles mal-formées : mauvais parenthèsage, caractère invalide, parenthèse inutiles. Par exemple la chaîne (((SN)/V)/SN) va être traduite au final par (SN/V)/SN.
+
+Une fois les méthodes pour créer les règles terminées, j'ai travaillé sur l'application des règles / et \ sur un couple de terme.
+
+Avec ces quelques fonctions, j'ai pu mettre en place mon algorithme.
+
+**L'algorithme :** Mon algorithme travaille en force brute sur le texte à dériver. Pour chaque couple de terme de la phrase, il test si l'une des 2 règles est applicable. Si c'est le cas, une nouvelle étape est généré à partir de la précédente et la recherche est relancé sur cette nouvelle étape. Mais la recherche sur l'étape précédente ne s'arrête pas, afin de pouvoir retourner l'ensemble des dérivations possible. A chaque fois qu'une règle est applicable, une nouvelle dérivation est créée. A chaque fois qu'une dérivation aboutie, c'est-à-dire que l'on obtient un terme unique, la dérivation est envoyé à un flux qui récupère l'ensemble des dérivations.
+
+*Des tests unitaires permettent de valider les différentes briques de mon implémentation.*
  
 ## Installation
  
@@ -46,7 +57,7 @@ Si malgré tout vous n'arrivez pas à faire fonctionner le projet, j'ai héberg�
 
 Vous pouvez aussi retrouver la doc de la librairie à l'adresse [http://noemisalaun.fr/grammar/doc](http://noemisalaun.fr/grammar/doc)
 
-## Utilisation de l'appli web
+## Utilisation de l'application web
 
  - Les règles de la grammaire doivent être au format "terme: SN/V" avec une règle par ligne. Normalement le parser est assez souple au niveau des espaces et des lignes vides, mais on ne sait jamais.
  - La phrase à dériver est découpé aux espaces.
