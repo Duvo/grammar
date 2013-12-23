@@ -66,3 +66,39 @@ Vous pouvez aussi retrouver la doc de la librairie à l'adresse [http://noemisal
    - En rouge, la partie de droite
    - En fin de ligne, la règle utilisée (/ ou \\)
  - Le cadre de droit correspond à la console de Dart, il permet d'afficher le détail en cas d'erreur.
+
+### Jeux d'essais
+
+```
+Pierre: SN
+aime: (SN\S)/SN
+beaucoup: (SN\S)\(SN\S)
+les: SN/N
+cacahouètes: N
+```
+ - Pierre aime les cacahouètes
+
+
+```
+Pierre: SN
+aime: (SN\S)/SN
+beaucoup: ((SN\S)/SN)\((SN\S)/SN)
+les: SN/N
+cacahouètes: N
+```
+ - Pierre aime beaucoup les cacahouètes
+ - Pierre aime beaucoup beaucoup les cacahouètes
+
+```
+Pierre: SN
+regarde: (SN\S)/SN
+donne: ((SN\S)/GP)/SN
+une: SN/N
+pomme: N
+et: (SN\SN)/SN
+poire: N
+à: GP/SN
+Marie: SN
+```
+ - Pierre regarde Marie
+ - Pierre donne une pomme et une poire à Marie
