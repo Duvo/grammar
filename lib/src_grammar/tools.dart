@@ -1,15 +1,28 @@
 part of grammar;
 
+/**
+ * Nettoie une chaîne en ne conservant que les caractères suivants :
+ *  - a-z et A-Z
+ *  - les chiffres
+ *  - les caractères de règles / et \
+ *  - les parenthèses
+ */
 String stringCleaning(String string) {
   return string.replaceAll(new RegExp(r'[^\d\w/\\()]+'), '');
 }
 
+/**
+ * Vérifie si la règle est bien formée.
+ */
 checkRule(dynamic rule) {
   if (rule is String) {
     checkTerme(rule);
   }
 }
 
+/**
+ * Vérifie si le terme est bien formé. Seulement des lettres ou des chiffres.
+ */
 checkTerme(String terme) {
   var regex = new RegExp(r'[^\d\w]+');
   if (regex.hasMatch(terme)) {
@@ -17,6 +30,9 @@ checkTerme(String terme) {
   }
 }
 
+/**
+ * Vérifie que l'opérateur est correct.
+ */
 checkOperator(dynamic operator) {
   if (operator is String) {
   var regex = new RegExp(r'[^/\\]+');
@@ -28,6 +44,11 @@ checkOperator(dynamic operator) {
   }
 }
 
+/**
+ * Permet de parser une chaîne parenthèsée dans une structure en listes. Les
+ * parenthèse inutiles sont retirées. Exemple :
+ *  La chaine ((SN)/V)\SN va donner la structure [['SN', '\', 'V'],'\','SN'].
+ */
 List parseParenthesis(String string) {
   var clean = stringCleaning(string);
   var count = 0;

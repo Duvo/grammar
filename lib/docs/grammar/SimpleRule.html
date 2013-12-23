@@ -1,0 +1,199 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>SimpleRule class / grammar Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="grammar" data-type="SimpleRule">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../grammar.html">grammar</a> &rsaquo; <a href="../grammar/SimpleRule.html">SimpleRule</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+<h2><div class="icon-library"></div><a href="../grammar.html">grammar</a></h2><ul class="icon">
+<li><a href="../grammar/Derivation.html"><div class="icon-class"></div>Derivation</a></li>
+<li><a href="../grammar/Grammar.html"><div class="icon-class"></div>Grammar</a></li>
+<li><a href="../grammar/MetaRule.html"><div class="icon-class"></div>MetaRule</a></li>
+<li><a href="../grammar/Rule.html"><div class="icon-class"></div>Rule</a></li>
+<li><div class="icon-class"></div><strong>SimpleRule</strong></li>
+<li><a href="../grammar/Step.html"><div class="icon-class"></div>Step</a></li>
+</ul>
+</div>
+<div class="content">
+        <h2><strong>SimpleRule</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Implémentation de base d'une règle. Règle simple de la forme SN.</p>
+<pre class="source">
+class SimpleRule implements Rule {
+ String _value;
+ String get value =&gt; _value;
+ 
+ /**
+  * Constructeur de base qui prend la valeur du terme en entrée.
+  */
+ SimpleRule(this._value);
+ 
+ @override
+ int get hashCode {
+   return 37 * 17 + _value.hashCode;
+ }
+
+ @override
+ bool operator==(other) {
+   if (other is SimpleRule) {
+     return other.value == value;
+   } else {
+     return false;
+   }    
+ }
+ 
+ @override
+ String toString() =&gt; value;
+}
+</pre>
+</div>
+<h3>Implements</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../grammar/Rule.html">Rule</a></span></p>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="">
+<button class="show-code">Code</button>
+new <strong>SimpleRule</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> _value) <a class="anchor-link" href="#"
+              title="Permalink to SimpleRule.SimpleRule">#</a></h4>
+<div class="doc">
+<p>Constructeur de base qui prend la valeur du terme en entrée.</p>
+<pre class="source">
+SimpleRule(this._value);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="hashCode">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>hashCode</strong> <a class="anchor-link"
+            href="#hashCode"
+            title="Permalink to SimpleRule.hashCode">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>Get a hash code for this object.</p>
+<p>All objects have hash codes. Hash codes are guaranteed to be the
+same for objects that are equal when compared using the equality
+operator <code>==</code>. Other than that there are no guarantees about
+the hash codes. They will not be consistent between runs and
+there are no distribution guarantees.</p>
+<p>If a subclass overrides <a class="crossref" href="../grammar/SimpleRule.html#hashCode">hashCode</a> it should override the
+equality operator as well to maintain consistency.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+@override
+int get hashCode {
+ return 37 * 17 + _value.hashCode;
+}
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="value">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>value</strong> <a class="anchor-link"
+            href="#value"
+            title="Permalink to SimpleRule.value">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>La forme de surface de la règle.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../grammar/Rule.html">Rule</a> </div></div>
+<pre class="source">
+String get value =&gt; _value;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Operators</h3>
+<div class="method"><h4 id="==">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>operator ==</strong>(other) <a class="anchor-link" href="#=="
+              title="Permalink to SimpleRule.operator ==">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>The equality operator.</p>
+<p>The default behavior for all <a class="crossref" href="../dart_core/Object.html">Object</a>s is to return true if and
+only if <code>this</code> and 
+<span class="param">other</span> are the same object.</p>
+<p>Override this method to specify a different equality relation on
+a class. The overriding method must still be an equivalence relation.
+That is, it must be:</p><ul><li>
+<p>Total: It must return a boolean for all arguments. It should never throw
+   or return <code>null</code>.</p></li><li>
+<p>Reflexive: For all objects <code>o</code>, <code>o == o</code> must be true.</p></li><li>
+<p>Symmetric: For all objects <code>o1</code> and <code>o2</code>, <code>o1 == o2</code> and <code>o2 == o1</code> must
+   either both be true, or both be false.</p></li><li>
+<p>Transitive: For all objects <code>o1</code>, <code>o2</code>, and <code>o3</code>, if <code>o1 == o2</code> and
+   <code>o2 == o3</code> are true, then <code>o1 == o3</code> must be true.</p></li></ul>
+<p>The method should also be consistent over time, so equality of two objects
+should not change over time, or at least only change if one of the objects
+was modified.</p>
+<p>If a subclass overrides the equality operator it should override
+the <a class="crossref" href="../grammar/SimpleRule.html#hashCode">hashCode</a> method as well to maintain consistency.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+@override
+bool operator==(other) {
+ if (other is SimpleRule) {
+   return other.value == value;
+ } else {
+   return false;
+ }    
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to SimpleRule.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+@override
+String toString() =&gt; value;
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-12-23 17:42:00.073</div>
+        </div>
+        <script async src="../client-static.js"></script>
+        </body></html>
+        

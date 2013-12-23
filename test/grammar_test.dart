@@ -1,7 +1,7 @@
 import 'package:unittest/unittest.dart';
 import 'package:grammar/grammar.dart';
 
-main() { 
+main() {  
   group('Instance', () {
     var grammar = new Grammar();
     grammar.rules['Pierre'] = new Rule.parse('SN');
@@ -11,13 +11,17 @@ main() {
     grammar.rules['cacahouètes'] = new Rule.parse('N');
     
     test('derivable',() {
-      var derivation = grammar.derivate('Pierre aime les cacahouètes');
-      expect(derivation, isNotNull);
-      print(derivation);
+      grammar.derivate('Pierre aime les cacahouètes')
+        .isEmpty.then(expectAsync1((isEmpty) {
+          expect(isEmpty, isFalse);
+      }));
     });
     
     test('not derivable',() {
-      expect(grammar.derivate('Pierre aime beaucoup les cacahouètes'), isNull);
+      grammar.derivate('Pierre aime beaucoup les cacahouètes')
+        .isEmpty.then(expectAsync1((isEmpty) {
+        expect(isEmpty, isTrue);
+      }));
     });
   });
   

@@ -1,13 +1,25 @@
 part of grammar;
 
+/**
+ * Permet de stocker une règle de grammaire ou un terme de la forme (SN/V).
+ */
 abstract class Rule {
+  /// La forme de surface de la règle.
   String get value;
   
+  /**
+   * Constructeur permettant de créer la structure de règle correspondante à la
+   * chaîne fournie.
+   */
   factory Rule.parse(String string) {
     var structure = parseParenthesis(string);
     return new Rule.parseStructure(structure);
   }
   
+  /**
+   * Constructeur permettant de créer la structure de règle correspondante à la
+   * structure parenthèsée fournie.
+   */
   factory Rule.parseStructure(dynamic rule) {
     if (rule is String) {
       checkTerme(rule);
@@ -33,10 +45,16 @@ abstract class Rule {
   }
 }
 
+/**
+ * Implémentation de base d'une règle. Règle simple de la forme SN.
+ */
 class SimpleRule implements Rule {
   String _value;
   String get value => _value;
   
+  /**
+   * Constructeur de base qui prend la valeur du terme en entrée.
+   */
   SimpleRule(this._value);
   
   @override
@@ -57,9 +75,17 @@ class SimpleRule implements Rule {
   String toString() => value;
 }
 
-class MetaRule implements Rule {  
+/**
+ * Implémentation des règles composées. Règle de la forme (SN/V).
+ */
+class MetaRule implements Rule {
+  /// Partie gauche de la règle.
   Rule left;
+  
+  /// Partie droite de la règle.
   Rule right;
+  
+  /// Vrai si il s'agit d'une règle /. Faux si il s'agit d'une règle \.
   bool isSlash;
   
   String get value {
@@ -69,6 +95,9 @@ class MetaRule implements Rule {
     return ret;
   }
   
+  /**
+   * Constructeur de base prenant les différentes parties et le type en entrée.
+   */
   MetaRule(this.left, this.right, this.isSlash);
   
   @override

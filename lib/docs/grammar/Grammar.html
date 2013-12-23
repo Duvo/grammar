@@ -1,0 +1,174 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Grammar class / grammar Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="grammar" data-type="Grammar">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../grammar.html">grammar</a> &rsaquo; <a href="../grammar/Grammar.html">Grammar</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+<h2><div class="icon-library"></div><a href="../grammar.html">grammar</a></h2><ul class="icon">
+<li><a href="../grammar/Derivation.html"><div class="icon-class"></div>Derivation</a></li>
+<li><div class="icon-class"></div><strong>Grammar</strong></li>
+<li><a href="../grammar/MetaRule.html"><div class="icon-class"></div>MetaRule</a></li>
+<li><a href="../grammar/Rule.html"><div class="icon-class"></div>Rule</a></li>
+<li><a href="../grammar/SimpleRule.html"><div class="icon-class"></div>SimpleRule</a></li>
+<li><a href="../grammar/Step.html"><div class="icon-class"></div>Step</a></li>
+</ul>
+</div>
+<div class="content">
+        <h2><strong>Grammar</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Permet de créer une grammaire catégorielle puis de rechercher les dérivations
+liée à une phrase selon les règles (A/B B -> A) et (B B\A -> A).</p>
+<pre class="source">
+class Grammar {
+ /// Les règles de la grammaires.
+ Map&lt;String, Rule&gt; rules = {};
+ 
+ /**
+  * Lance la recherche des différentes dérivations possible. Retourne un stream
+  * qui récupère les différentes dérivations.
+  */
+ Stream&lt;Derivation&gt; derivate(String text) {
+   var controller = new StreamController&lt;Derivation&gt;();
+   var derivation = new Derivation.parse(text, this);
+   new Future(() {
+     derivation.findAll(controller);
+   });    
+   return controller.stream;
+ }
+ 
+ /**
+  * Essaye d'appliquer la règle (A/B B -&gt; A) sur 2 termes. Retourne le
+  * nouveau terme obtenu ou nul si la règle n'est pas applicable.
+  */
+ static Rule useSlashRule(Rule left, Rule right) {
+   if (left is MetaRule &amp;&amp; left.isSlash &amp;&amp; left.right == right) {
+     return left.left;
+   } else {
+     return null;
+   }
+ }
+ 
+ /**
+  * Essaye d'appliquer la règle (B B\A -&gt; A) sur 2 termes. Retourne le
+  * nouveau terme obtenu ou nul si la règle n'est pas applicable.
+  */
+ static Rule useBackslashRule(Rule left, Rule right) {
+   if (right is MetaRule &amp;&amp; !right.isSlash &amp;&amp; right.left == left) {
+     return right.right;
+   } else {
+     return null;
+   }
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="useSlashRule">
+<button class="show-code">Code</button>
+<a href="../grammar/Rule.html">Rule</a> <strong>useSlashRule</strong>(<a href="../grammar/Rule.html">Rule</a> left, <a href="../grammar/Rule.html">Rule</a> right) <a class="anchor-link" href="#useSlashRule"
+              title="Permalink to Grammar.useSlashRule">#</a></h4>
+<div class="doc">
+<p>Essaye d'appliquer la règle (A/B B -> A) sur 2 termes. Retourne le
+nouveau terme obtenu ou nul si la règle n'est pas applicable.</p>
+<pre class="source">
+static Rule useSlashRule(Rule left, Rule right) {
+ if (left is MetaRule &amp;&amp; left.isSlash &amp;&amp; left.right == right) {
+   return left.left;
+ } else {
+   return null;
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="useBackslashRule">
+<button class="show-code">Code</button>
+<a href="../grammar/Rule.html">Rule</a> <strong>useBackslashRule</strong>(<a href="../grammar/Rule.html">Rule</a> left, <a href="../grammar/Rule.html">Rule</a> right) <a class="anchor-link" href="#useBackslashRule"
+              title="Permalink to Grammar.useBackslashRule">#</a></h4>
+<div class="doc">
+<p>Essaye d'appliquer la règle (B B\A -> A) sur 2 termes. Retourne le
+nouveau terme obtenu ou nul si la règle n'est pas applicable.</p>
+<pre class="source">
+static Rule useBackslashRule(Rule left, Rule right) {
+ if (right is MetaRule &amp;&amp; !right.isSlash &amp;&amp; right.left == left) {
+   return right.right;
+ } else {
+   return null;
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="rules">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="../grammar/Rule.html">Rule</a>&gt;         <strong>rules</strong> <a class="anchor-link"
+            href="#rules"
+            title="Permalink to Grammar.rules">#</a>
+        </h4>
+        <div class="doc">
+<p>Les règles de la grammaires.</p>
+<pre class="source">
+Map&lt;String, Rule&gt; rules = {}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="derivate">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../grammar/Derivation.html">Derivation</a>&gt; <strong>derivate</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> text) <a class="anchor-link" href="#derivate"
+              title="Permalink to Grammar.derivate">#</a></h4>
+<div class="doc">
+<p>Lance la recherche des différentes dérivations possible. Retourne un stream
+qui récupère les différentes dérivations.</p>
+<pre class="source">
+Stream&lt;Derivation&gt; derivate(String text) {
+ var controller = new StreamController&lt;Derivation&gt;();
+ var derivation = new Derivation.parse(text, this);
+ new Future(() {
+   derivation.findAll(controller);
+ });    
+ return controller.stream;
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-12-23 17:41:59.955</div>
+        </div>
+        <script async src="../client-static.js"></script>
+        </body></html>
+        

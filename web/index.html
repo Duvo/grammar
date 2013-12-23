@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Grammaires catégorielles</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <h1>Grammaires catégorielles</h1>
+    
+    <h3>Règles de la grammaire</h3>
+    <textarea id="grammar" cols="40" rows="10"></textarea>
+    <textarea id="console" cols="40" rows="10" disabled></textarea>
+    <br/>
+    <h3>Phrase à dériver</h3>
+    <input type="text" id="phrase" size="40">
+    <button id="derivate">Trouver les dérivations</button>
+    <div id="result"></div>    
+
+    <script type="application/dart" src="main.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

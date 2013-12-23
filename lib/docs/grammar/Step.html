@@ -1,0 +1,178 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Step class / grammar Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="grammar" data-type="Step">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../grammar.html">grammar</a> &rsaquo; <a href="../grammar/Step.html">Step</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+<h2><div class="icon-library"></div><a href="../grammar.html">grammar</a></h2><ul class="icon">
+<li><a href="../grammar/Derivation.html"><div class="icon-class"></div>Derivation</a></li>
+<li><a href="../grammar/Grammar.html"><div class="icon-class"></div>Grammar</a></li>
+<li><a href="../grammar/MetaRule.html"><div class="icon-class"></div>MetaRule</a></li>
+<li><a href="../grammar/Rule.html"><div class="icon-class"></div>Rule</a></li>
+<li><a href="../grammar/SimpleRule.html"><div class="icon-class"></div>SimpleRule</a></li>
+<li><div class="icon-class"></div><strong>Step</strong></li>
+</ul>
+</div>
+<div class="content">
+        <h2><strong>Step</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Permet de stocker une étape de dérivation.</p>
+<pre class="source">
+class Step {
+ /// Identifie la règle utilisée lors de l'étape précédente (/ ou \).
+ bool slashUsed;
+ /// L'index de la partie gauche de la transformation qui a été appliquée.
+ int leftId;
+ /// Les termes de cette étape.
+ List&lt;Rule&gt; phrase;
+ 
+ /**
+  * Constructeur de base.
+  */
+ Step(this.phrase, this.slashUsed, this.leftId);
+ 
+ /**
+  * Constructeur pour créer l'étape initiale directement déduite de la
+  * grammaire.
+  */
+ Step.initial(this.phrase): slashUsed = null, leftId = null;
+ 
+ @override
+ String toString() {
+   var result = phrase.toString();
+   if (slashUsed is bool) {
+     result += ' ' + leftId.toString() + (slashUsed ? ' / '  : r' \ ') + (leftId+1).toString();
+   } else {
+     result += ' INITIAL';
+   }
+   return result + '\n';
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="">
+<button class="show-code">Code</button>
+new <strong>Step</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../grammar/Rule.html">Rule</a>&gt; phrase, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> slashUsed, <a href="http://api.dartlang.org/dart_core/int.html">int</a> leftId) <a class="anchor-link" href="#"
+              title="Permalink to Step.Step">#</a></h4>
+<div class="doc">
+<p>Constructeur de base.</p>
+<pre class="source">
+Step(this.phrase, this.slashUsed, this.leftId);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="initial">
+<button class="show-code">Code</button>
+new <strong>Step.initial</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../grammar/Rule.html">Rule</a>&gt; phrase) <a class="anchor-link" href="#initial"
+              title="Permalink to Step.Step.initial">#</a></h4>
+<div class="doc">
+<p>Constructeur pour créer l'étape initiale directement déduite de la
+grammaire.</p>
+<pre class="source">
+Step.initial(this.phrase): slashUsed = null, leftId = null;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="leftId">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>leftId</strong> <a class="anchor-link"
+            href="#leftId"
+            title="Permalink to Step.leftId">#</a>
+        </h4>
+        <div class="doc">
+<p>L'index de la partie gauche de la transformation qui a été appliquée.</p>
+<pre class="source">
+int leftId
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="phrase">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../grammar/Rule.html">Rule</a>&gt;         <strong>phrase</strong> <a class="anchor-link"
+            href="#phrase"
+            title="Permalink to Step.phrase">#</a>
+        </h4>
+        <div class="doc">
+<p>Les termes de cette étape.</p>
+<pre class="source">
+List&lt;Rule&gt; phrase
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="slashUsed">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>slashUsed</strong> <a class="anchor-link"
+            href="#slashUsed"
+            title="Permalink to Step.slashUsed">#</a>
+        </h4>
+        <div class="doc">
+<p>Identifie la règle utilisée lors de l'étape précédente (/ ou \).</p>
+<pre class="source">
+bool slashUsed
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to Step.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+@override
+String toString() {
+ var result = phrase.toString();
+ if (slashUsed is bool) {
+   result += ' ' + leftId.toString() + (slashUsed ? ' / '  : r' \ ') + (leftId+1).toString();
+ } else {
+   result += ' INITIAL';
+ }
+ return result + '\n';
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-12-23 17:41:59.852</div>
+        </div>
+        <script async src="../client-static.js"></script>
+        </body></html>
+        

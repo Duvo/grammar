@@ -1,0 +1,239 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Derivation class / grammar Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="grammar" data-type="Derivation">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../grammar.html">grammar</a> &rsaquo; <a href="../grammar/Derivation.html">Derivation</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+<h2><div class="icon-library"></div><a href="../grammar.html">grammar</a></h2><ul class="icon">
+<li><div class="icon-class"></div><strong>Derivation</strong></li>
+<li><a href="../grammar/Grammar.html"><div class="icon-class"></div>Grammar</a></li>
+<li><a href="../grammar/MetaRule.html"><div class="icon-class"></div>MetaRule</a></li>
+<li><a href="../grammar/Rule.html"><div class="icon-class"></div>Rule</a></li>
+<li><a href="../grammar/SimpleRule.html"><div class="icon-class"></div>SimpleRule</a></li>
+<li><a href="../grammar/Step.html"><div class="icon-class"></div>Step</a></li>
+</ul>
+</div>
+<div class="content">
+        <h2><strong>Derivation</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Permet de stocker une dérivation en cours ainsi que d'effectuer les 
+recherches de nouvelles dérivations.</p>
+<pre class="source">
+class Derivation {
+ /// La liste des mots de la phrase que l'on dérive.
+ List&lt;String&gt; text = [];
+ 
+ /// Les différentes étapes de la dérivation.
+ List&lt;Step&gt; steps = [];
+ 
+ /**
+  * Constructeur de copie.
+  */
+ Derivation.clone(Derivation original):
+   text = original.text,
+   steps = new List.from(original.steps);
+ 
+ /**
+  * Constructeur permettant de récupérer la phrase ainsi que la première
+  * étape de dérivation correspondante à la grammaire.
+  */
+ Derivation.parse(String text, Grammar grammar) {    
+   var phrase = [];
+   var split = text.split(' ');
+   for(var word in split) {
+     word = word.trim();
+     if (word.isNotEmpty) {
+       if (grammar.rules.containsKey(word)) {
+         this.text.add(word);
+         phrase.add(grammar.rules[word]);
+       } else {
+         throw 'Le mot ${word} est inconnu dans la grammaire.';
+       }
+     }
+   }
+   steps.add(new Step.initial(phrase));
+ }
+ 
+ /**
+  * Lance la recherche des dérivations. Chaque dérivation trouvée est
+  * envoyée au stream.
+  */
+ findAll(StreamController controller) {
+   _findAll(controller);
+   controller.close();
+ }
+ 
+ _findAll(StreamController controller) {
+   var step = steps.last;
+   for (var i=0; i&lt;step.phrase.length-1; i++) {
+     var left = step.phrase[i];
+     var right = step.phrase[i+1];
+     
+     var test = Grammar.useSlashRule(left, right);
+     var isSlash = true;
+     if (test == null) {
+       test = Grammar.useBackslashRule(left, right);
+       isSlash = false;
+     }
+     if (test != null) {
+       var phrase = step.phrase.sublist(0, i);
+       phrase.add(test);
+       phrase.addAll(step.phrase.sublist(i+2, step.phrase.length));
+       var nextStep = new Step(phrase, isSlash, i);
+       var newDerivation = new Derivation.clone(this)
+       ..steps.add(nextStep);
+       if (nextStep.phrase.length &gt; 1) {
+         newDerivation._findAll(controller);
+       } else {
+         controller.add(newDerivation);          
+       }        
+     }    
+   }
+ }
+ 
+ @override
+ String toString() {
+   return text.toString() + '\n' + steps.toString();
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="clone">
+<button class="show-code">Code</button>
+new <strong>Derivation.clone</strong>(<a href="../grammar/Derivation.html">Derivation</a> original) <a class="anchor-link" href="#clone"
+              title="Permalink to Derivation.Derivation.clone">#</a></h4>
+<div class="doc">
+<p>Constructeur de copie.</p>
+<pre class="source">
+Derivation.clone(Derivation original):
+ text = original.text,
+ steps = new List.from(original.steps);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="parse">
+<button class="show-code">Code</button>
+new <strong>Derivation.parse</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> text, <a href="../grammar/Grammar.html">Grammar</a> grammar) <a class="anchor-link" href="#parse"
+              title="Permalink to Derivation.Derivation.parse">#</a></h4>
+<div class="doc">
+<p>Constructeur permettant de récupérer la phrase ainsi que la première
+étape de dérivation correspondante à la grammaire.</p>
+<pre class="source">
+Derivation.parse(String text, Grammar grammar) {    
+ var phrase = [];
+ var split = text.split(' ');
+ for(var word in split) {
+   word = word.trim();
+   if (word.isNotEmpty) {
+     if (grammar.rules.containsKey(word)) {
+       this.text.add(word);
+       phrase.add(grammar.rules[word]);
+     } else {
+       throw 'Le mot ${word} est inconnu dans la grammaire.';
+     }
+   }
+ }
+ steps.add(new Step.initial(phrase));
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="steps">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../grammar/Step.html">Step</a>&gt;         <strong>steps</strong> <a class="anchor-link"
+            href="#steps"
+            title="Permalink to Derivation.steps">#</a>
+        </h4>
+        <div class="doc">
+<p>Les différentes étapes de la dérivation.</p>
+<pre class="source">
+List&lt;Step&gt; steps = []
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="text">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>text</strong> <a class="anchor-link"
+            href="#text"
+            title="Permalink to Derivation.text">#</a>
+        </h4>
+        <div class="doc">
+<p>La liste des mots de la phrase que l'on dérive.</p>
+<pre class="source">
+List&lt;String&gt; text = []
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="findAll">
+<button class="show-code">Code</button>
+dynamic <strong>findAll</strong>(<a href="http://api.dartlang.org/dart_async/StreamController.html">StreamController</a> controller) <a class="anchor-link" href="#findAll"
+              title="Permalink to Derivation.findAll">#</a></h4>
+<div class="doc">
+<p>Lance la recherche des dérivations. Chaque dérivation trouvée est
+envoyée au stream.</p>
+<pre class="source">
+findAll(StreamController controller) {
+ _findAll(controller);
+ controller.close();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to Derivation.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+@override
+String toString() {
+ return text.toString() + '\n' + steps.toString();
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-12-23 17:41:59.906</div>
+        </div>
+        <script async src="../client-static.js"></script>
+        </body></html>
+        

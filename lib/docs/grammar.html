@@ -1,0 +1,229 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>grammar Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="grammar">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">Dart Documentation</a>
+         &rsaquo; <a href="grammar.html">grammar</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+<h2><div class="icon-library"></div><strong>grammar</strong></h2><ul class="icon">
+<li><a href="grammar/Derivation.html"><div class="icon-class"></div>Derivation</a></li>
+<li><a href="grammar/Grammar.html"><div class="icon-class"></div>Grammar</a></li>
+<li><a href="grammar/MetaRule.html"><div class="icon-class"></div>MetaRule</a></li>
+<li><a href="grammar/Rule.html"><div class="icon-class"></div>Rule</a></li>
+<li><a href="grammar/SimpleRule.html"><div class="icon-class"></div>SimpleRule</a></li>
+<li><a href="grammar/Step.html"><div class="icon-class"></div>Step</a></li>
+</ul>
+</div>
+<div class="content">
+<h2><strong>grammar</strong> library</h2>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="parseParenthesis">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/List.html">List</a> <strong>parseParenthesis</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> string) <a class="anchor-link" href="#parseParenthesis"
+              title="Permalink to parseParenthesis">#</a></h4>
+<div class="doc">
+<p>Permet de parser une chaîne parenthèsée dans une structure en listes. Les
+parenthèse inutiles sont retirées. Exemple :
+ La chaine ((SN)/V)\SN va donner la structure [['SN', '\', 'V'],'\','SN'].</p>
+<pre class="source">
+List parseParenthesis(String string) {
+ var clean = stringCleaning(string);
+ var count = 0;
+ var list = [];
+ var current = '';
+ var chars = clean.split('');
+ 
+ for(var char in chars) {
+   switch (char) {
+     case '(':
+       if (count &gt; 0) {
+         current += char;
+       }
+       count++;
+       break;
+       
+     case ')':          
+       count--;
+       if (count &gt; 0) {
+         current += char;
+       } else {
+         var subList = parseParenthesis(current);
+         if (subList.length &gt; 1) {
+           list.add(subList);
+         } else if (subList.length == 1) {
+           list.add(subList.first);
+         }
+         current = '';
+       }       
+       break;
+       
+     case '/':
+     case r'\':
+       if (count &gt; 0) {
+         current += char;
+       } else {
+         if (current.isNotEmpty) {
+           list.add(current);
+           current = '';
+         }
+         list.add(char);
+       }        
+       break;
+       
+     default:
+       current += char;
+   }
+ }
+ if (current.isNotEmpty) {
+   list.add(current);
+ }
+ if (count &gt; 0) {
+   throw 'Incohérence de parenthésage. ${count} parenthèses ouvrantes en trop.';
+ } else if (count &lt; 0) {
+   throw 'Incohérence de parenthésage. ${-count} parenthèses fermantes en trop.';
+ }
+ return list;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="checkOperator">
+<button class="show-code">Code</button>
+dynamic <strong>checkOperator</strong>(operator) <a class="anchor-link" href="#checkOperator"
+              title="Permalink to checkOperator">#</a></h4>
+<div class="doc">
+<p>Vérifie que l'opérateur est correct.</p>
+<pre class="source">
+checkOperator(dynamic operator) {
+ if (operator is String) {
+ var regex = new RegExp(r'[^/\\]+');
+ if (regex.hasMatch(operator)) {
+   throw 'Règle mal écrite. ${operator} n\'est pas un opérateur / ou \\.';
+ }
+ } else {
+   throw 'Règle mal écrite. La partie centrale d\'une règle doit être un opérateur / ou \\.';
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="checkTerme">
+<button class="show-code">Code</button>
+dynamic <strong>checkTerme</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> terme) <a class="anchor-link" href="#checkTerme"
+              title="Permalink to checkTerme">#</a></h4>
+<div class="doc">
+<p>Vérifie si le terme est bien formé. Seulement des lettres ou des chiffres.</p>
+<pre class="source">
+checkTerme(String terme) {
+ var regex = new RegExp(r'[^\d\w]+');
+ if (regex.hasMatch(terme)) {
+   throw 'Règle mal écrite. ${terme} n\'est pas un terme simple.';
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="checkRule">
+<button class="show-code">Code</button>
+dynamic <strong>checkRule</strong>(rule) <a class="anchor-link" href="#checkRule"
+              title="Permalink to checkRule">#</a></h4>
+<div class="doc">
+<p>Vérifie si la règle est bien formée.</p>
+<pre class="source">
+checkRule(dynamic rule) {
+ if (rule is String) {
+   checkTerme(rule);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="stringCleaning">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>stringCleaning</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> string) <a class="anchor-link" href="#stringCleaning"
+              title="Permalink to stringCleaning">#</a></h4>
+<div class="doc">
+<p>Nettoie une chaîne en ne conservant que les caractères suivants :
+ - a-z et A-Z
+ - les chiffres
+ - les caractères de règles / et \
+ - les parenthèses</p>
+<pre class="source">
+String stringCleaning(String string) {
+ return string.replaceAll(new RegExp(r'[^\d\w/\\()]+'), '');
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Abstract Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="grammar/Rule.html"><strong>Rule</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="grammar/Derivation.html"><strong>Derivation</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="grammar/Grammar.html"><strong>Grammar</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="grammar/MetaRule.html"><strong>MetaRule</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="grammar/SimpleRule.html"><strong>SimpleRule</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="grammar/Step.html"><strong>Step</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-12-23 17:41:59.801</div>
+        </div>
+        <script async src="client-static.js"></script>
+        </body></html>
+        
