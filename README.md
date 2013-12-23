@@ -29,7 +29,7 @@ de base offerte par le langage. Aucune librairie extérieure n'a été utilisée
  - **web :** Contient l'application web permettant de fournir une interface graphique
  minimale pour tester la librairie.
  
- ### Déroulement du développement
+### Déroulement du développement
  
  TODO
  
@@ -45,3 +45,13 @@ Il m'est arrivé de rencontrer des problèmes avec Dartium sur Linux. Vous pouve
 Si malgré tout vous n'arrivez pas à faire fonctionner le projet, j'ai hébergé une version fonctionnelle à l'adresse suivante : [http://noemisalaun.fr/grammar](http://noemisalaun.fr/grammar).
 
 Vous pouvez aussi retrouver la doc de la librairie à l'adresse [http://noemisalaun.fr/grammar/doc](http://noemisalaun.fr/grammar/doc)
+
+## Utilisation de l'appli web
+
+ - Les règles de la grammaire doivent être au format "terme: SN/V" avec une règle par ligne. Normalement le parser est assez souple au niveau des espaces et des lignes vides, mais on ne sait jamais.
+ - La phrase à dériver est découpé aux espaces.
+ - Toutes les dérivations sont retrouvées. Pour chaque étape de la dérivation :
+   - En bleu, la partie de gauche
+   - En rouge, la partie de droite
+   - En fin de ligne, la règle utilisée (/ ou \\)
+ - Le cadre de droit correspond à la console de Dart, il permet d'afficher le détail en cas d'erreur.
